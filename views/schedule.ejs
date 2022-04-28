@@ -1,18 +1,22 @@
 <ul>
-    <% for (course of courses){%>
-        <li> 
-            <a href="/schedule/remove/<%= course._id %>">X</a>
-            <%= course['subject'] %>
-            <%= course.coursenum %>
-            <%= course.name %>
-            <%= course.term %>
-            
-        </li>
+    <% var index = 1 %>
+    <% if (todayevents.length !== 0) { %>
+        <p class="h1"><%= todayevents[0]['day']%></p>
+        <br>
+        <br>
+        <% for (todayevent of todayevents) { %>
+            <li class="list-group-item"> 
+                <%= index %>
+                <%= todayevent['thisevent'] %>
+            </li>
+            <br>
+            <form method="post" action="/events/delete">
+                <input type="hidden" name="deleteday" value="<%= todayevents[0]['day'] %>">
+                <input type="hidden" name="deleteevent" value="<%= todayevent['thisevent'] %>">
+                <button type="submit" class="btn btn-primary">Delete this event from today</button>
+            </form>
+        <br>
+        <br>
+        <% index++; } %>
     <% } %>
 </ul>
-
-<!--
-    <pre>
-        <%= JSON.stringify(courses,null,5) %>
-    </pre>
--->
